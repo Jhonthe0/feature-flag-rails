@@ -1,0 +1,46 @@
+<section class="demo-hero">
+  <div>
+    <p class="eyebrow">Painel simples</p>
+    <h1>Feature Flags</h1>
+    <p>Altere a flag sem mexer no código e volte ao checkout para demonstrar deploy versus release.</p>
+  </div>
+
+  <%= link_to "Ver checkout", checkout_path, class: "button secondary" %>
+</section>
+
+<main class="flag-list">
+  <% if notice.present? %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+
+  <% @flags.each do |name, flag| %>
+    <section class="flag-card">
+      <div>
+        <p class="eyebrow"><%= flag["enabled"] ? "ON" : "OFF" %></p>
+        <h2><%= name %></h2>
+        <p>
+          Use 0% para manter desligado, 100% para liberar para todos ou um valor
+          intermediário para simular progressive rollout.
+        </p>
+      </div>
+
+      <%= form_with url: feature_flag_path(name), method: :patch, class: "flag-form" do |form| %>
+        <%= fields_for :feature_flag do |fields| %>
+          <label class="switch-row">
+            <%= fields.check_box :enabled, checked: flag["enabled"] %>
+            <span>Flag ativa</span>
+          </label>
+
+          <div class="field">
+            <%= fields.label :rollout_percentage, "Rollout (%)" %>
+            <%= fields.number_field :rollout_percentage, value: flag["rollout_percentage"], min: 0, max: 100 %>
+          </div>
+        <% end %>
+
+        <%= form.submit "Salvar", class: "button" %>
+      <% end %>
+    </section>
+  <% end %>
+
+  <%= button_to "Restaurar padrão", reset_feature_flags_path, method: :post, class: "button danger" %>
+</main>
