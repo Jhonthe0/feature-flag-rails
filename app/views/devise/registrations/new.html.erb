@@ -1,0 +1,40 @@
+<main class="auth-page">
+  <section class="auth-panel">
+    <div class="auth-copy">
+      <p class="eyebrow">Nova conta</p>
+      <h1>Cadastrar</h1>
+      <p>Crie um usuario simples para demonstrar a jornada completa: catalogo, carrinho e cupom.</p>
+    </div>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |form| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= form.label :name, "Nome" %>
+        <%= form.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Seu nome" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :email, "E-mail" %>
+        <%= form.email_field :email, autocomplete: "email", placeholder: "voce@example.com" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password, "Senha" %>
+        <%= form.password_field :password, autocomplete: "new-password", placeholder: "Minimo de 6 caracteres" %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password_confirmation, "Confirmar senha" %>
+        <%= form.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Repita a senha" %>
+      </div>
+
+      <%= form.submit "Criar conta", class: "button full" %>
+    <% end %>
+
+    <div class="auth-links">
+      <%= link_to "Ja tenho conta", new_session_path(resource_name) %>
+      <%= link_to "Voltar para loja", root_path %>
+    </div>
+  </section>
+</main>
