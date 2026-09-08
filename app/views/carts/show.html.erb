@@ -41,11 +41,6 @@
         <%= form.text_field :coupon_code, value: @coupon_code, placeholder: "AULA10 ou FLAGS20" %>
         <%= form.submit "Aplicar cupom", class: "button" %>
       <% end %>
-    <% else %>
-      <div class="flag-off">
-        <strong>Cupons desligados</strong>
-        <span>Ative com COUPONS_ENABLED=true e reinicie a aplicacao.</span>
-      </div>
     <% end %>
 
     <dl class="totals">

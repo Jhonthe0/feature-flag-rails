@@ -19,7 +19,7 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
       get cart_path
 
       assert_response :success
-      assert_select ".flag-off strong", "Cupons desligados"
+      assert_select ".coupon-form", count: 0
     end
   end
 
