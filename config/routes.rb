@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resource :checkout, only: :show
-  resources :feature_flags, only: %i[index update]
-  post "feature_flags/reset", to: "feature_flags#reset", as: :reset_feature_flags
+  resource :cart, only: :show
+  post "cart/items/:product_id", to: "carts#create", as: :cart_items
+  delete "cart/items/:product_id", to: "carts#destroy", as: :cart_item
+  patch "cart/coupon", to: "carts#update_coupon", as: :cart_coupon
 
-  root "checkouts#show"
+  root "products#index"
 end

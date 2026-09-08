@@ -8,11 +8,10 @@ services:
       RAILS_LOG_TO_STDOUT: "true"
       RAILS_SERVE_STATIC_FILES: "true"
       DISABLE_SSL: "true"
+      COUPONS_ENABLED: ${COUPONS_ENABLED:-false}
       SECRET_KEY_BASE: feature-flag-rails-demo-secret-key-base
     volumes:
       - feature_flag_storage:/rails/storage
-      - feature_flag_db:/rails/db
 
 volumes:
   feature_flag_storage:
-  feature_flag_db:

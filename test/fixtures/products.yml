@@ -1,0 +1,11 @@
+notebook:
+  name: Caderno universitario
+  description: Capa dura com 160 folhas para anotacoes da aula.
+  price_cents: 2490
+  image_color: "#a7c7e7"
+
+pen:
+  name: Caneta gel preta
+  description: Escrita macia para rascunhos e provas.
+  price_cents: 690
+  image_color: "#2f3a45"

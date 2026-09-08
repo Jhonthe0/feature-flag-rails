@@ -1,0 +1,41 @@
+<section class="store-hero">
+  <div>
+    <p class="eyebrow">Loja demo</p>
+    <h1>Produtos para testar feature flags</h1>
+    <p>
+      A compra funciona normalmente. A feature flag decide se o carrinho mostra ou
+      esconde a funcionalidade de cupom de desconto.
+    </p>
+  </div>
+
+  <div class="hero-actions">
+    <%= link_to "Carrinho (#{@cart_item_count})", cart_path, class: "button secondary" %>
+    <% if user_signed_in? %>
+      <%= button_to "Sair", destroy_user_session_path, method: :delete, class: "button ghost" %>
+    <% else %>
+      <%= link_to "Entrar", new_user_session_path, class: "button ghost" %>
+    <% end %>
+  </div>
+</section>
+
+<main class="store-shell">
+  <% if notice.present? %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+
+  <section class="product-grid">
+    <% @products.each do |product| %>
+      <article class="product-card">
+        <div class="product-swatch" style="background: <%= product.image_color %>"></div>
+        <div class="product-copy">
+          <h2><%= product.name %></h2>
+          <p><%= product.description %></p>
+        </div>
+        <div class="product-footer">
+          <strong><%= number_to_currency(product.price, unit: "R$ ", separator: ",", delimiter: ".") %></strong>
+          <%= button_to "Adicionar", cart_items_path(product_id: product.id), method: :post, class: "button" %>
+        </div>
+      </article>
+    <% end %>
+  </section>
+</main>

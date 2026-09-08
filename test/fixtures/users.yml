@@ -1,0 +1,4 @@
+student:
+  name: Aluno Demo
+  email: aluno@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>

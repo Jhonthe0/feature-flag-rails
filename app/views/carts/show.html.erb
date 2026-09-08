@@ -1,0 +1,66 @@
+<section class="store-hero compact">
+  <div>
+    <p class="eyebrow">Carrinho</p>
+    <h1>Resumo da compra</h1>
+    <p>
+      O campo de cupom abaixo aparece somente quando
+      <strong>COUPONS_ENABLED=true</strong>.
+    </p>
+  </div>
+
+  <%= link_to "Continuar comprando", root_path, class: "button secondary" %>
+</section>
+
+<main class="cart-shell">
+  <% if notice.present? %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+
+  <section class="cart-items">
+    <% if @cart_products.any? %>
+      <% @cart_products.each do |product| %>
+        <article class="cart-row">
+          <div>
+            <h2><%= product.name %></h2>
+            <p><%= number_to_currency(product.price, unit: "R$ ", separator: ",", delimiter: ".") %></p>
+          </div>
+          <%= button_to "Remover", cart_item_path(product), method: :delete, class: "button danger" %>
+        </article>
+      <% end %>
+    <% else %>
+      <p class="empty-state">Seu carrinho ainda esta vazio.</p>
+    <% end %>
+  </section>
+
+  <aside class="summary-panel">
+    <h2>Total</h2>
+
+    <% if @coupon_enabled %>
+      <%= form_with url: cart_coupon_path, method: :patch, class: "coupon-form" do |form| %>
+        <%= form.label :coupon_code, "Cupom" %>
+        <%= form.text_field :coupon_code, value: @coupon_code, placeholder: "AULA10 ou FLAGS20" %>
+        <%= form.submit "Aplicar cupom", class: "button" %>
+      <% end %>
+    <% else %>
+      <div class="flag-off">
+        <strong>Cupons desligados</strong>
+        <span>Ative com COUPONS_ENABLED=true e reinicie a aplicacao.</span>
+      </div>
+    <% end %>
+
+    <dl class="totals">
+      <div>
+        <dt>Subtotal</dt>
+        <dd><%= number_to_currency(@cart_summary.subtotal_cents / 100.0, unit: "R$ ", separator: ",", delimiter: ".") %></dd>
+      </div>
+      <div>
+        <dt>Desconto</dt>
+        <dd><%= number_to_currency(@cart_summary.discount_cents / 100.0, unit: "R$ ", separator: ",", delimiter: ".") %></dd>
+      </div>
+      <div class="grand-total">
+        <dt>Total</dt>
+        <dd><%= number_to_currency(@cart_summary.total_cents / 100.0, unit: "R$ ", separator: ",", delimiter: ".") %></dd>
+      </div>
+    </dl>
+  </aside>
+</main>

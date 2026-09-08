@@ -1,11 +1,14 @@
 # Feature Flag Rails
 
-Projeto Rails simples para demonstrar feature flags em aula.
+Projeto Rails simples para demonstrar feature flags em aula usando uma loja
+ficticia.
 
 ## Demo
 
-- `/checkout`: mostra o checkout atual ou o novo checkout conforme a flag.
-- `/feature_flags`: liga/desliga `new_checkout` e ajusta o percentual de rollout.
+- `/`: lista 20 produtos genericos.
+- `/users/sign_in`: login simples com Devise.
+- `/cart`: carrinho de compras protegido por login.
+- `COUPONS_ENABLED`: feature flag por variavel de ambiente que habilita cupons.
 
 ## Como rodar
 
@@ -13,10 +16,16 @@ Com Ruby local:
 
 ```bash
 bundle install
+bin/rails db:setup
 bin/rails server
 ```
 
 Abra `http://localhost:3000`.
+
+Login demo criado pelo seed:
+
+- email: `aluno@example.com`
+- senha: `password123`
 
 Com Docker:
 
@@ -26,10 +35,25 @@ docker compose up --build
 
 Abra `http://localhost:3000`.
 
+Para demonstrar a flag desligada:
+
+```bash
+COUPONS_ENABLED=false docker compose up --build
+```
+
+Para demonstrar a flag ligada:
+
+```bash
+COUPONS_ENABLED=true docker compose up --build
+```
+
+Cupons validos: `AULA10` e `FLAGS20`.
+
 ## Roteiro sugerido
 
-1. Comece com `new_checkout` desligada e rollout em `0%`.
-2. Mostre que o código do novo checkout existe, mas o usuário recebe o fluxo atual.
-3. Ligue a flag com rollout em `100%` e volte para `/checkout`.
-4. Simule um problema e desligue a flag como kill switch.
-5. Ligue novamente com rollout parcial, por exemplo `20%`, e altere o cliente na tela de checkout.
+1. Rode a aplicacao com `COUPONS_ENABLED=false`.
+2. Faça login, adicione produtos e mostre que o carrinho nao oferece cupom.
+3. Explique que o codigo de cupom ja existe no deploy.
+4. Reinicie com `COUPONS_ENABLED=true`.
+5. Aplique `AULA10` ou `FLAGS20` no carrinho e mostre o desconto.
+6. Simule problema no cupom e volte para `COUPONS_ENABLED=false`.
