@@ -9,9 +9,19 @@ Projeto Rails simples para demonstrar feature flags em aula.
 
 ## Como rodar
 
+Com Ruby local:
+
 ```bash
 bundle install
 bin/rails server
+```
+
+Abra `http://localhost:3000`.
+
+Com Docker:
+
+```bash
+docker compose up --build
 ```
 
 Abra `http://localhost:3000`.
